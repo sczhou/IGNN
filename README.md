@@ -1,6 +1,8 @@
 # IGNN
 
-Code repo for "Cross-Scale Internal Graph Neural Network for Image Super-Resolution" &nbsp; [[arXiv]](https://arxiv.org/pdf/2006.16673.pdf)
+:triangular_flag_on_post: **For visual comparison on the benchmarks, you can download our results from [here](https://drive.google.com/file/d/15x81tYQVpml4OvFqbA05mQQSRKL8phxz/view?usp=sharing).** Our code will also released soon...
+
+Code repo for "Cross-Scale Internal Graph Neural Network for Image Super-Resolution" &nbsp;[[arXiv]](https://arxiv.org/pdf/2006.16673.pdf)
 
 <p align="center">
   <img width=95% src="https://user-images.githubusercontent.com/14334509/86379250-34450200-bcbd-11ea-9a85-aab4bc73cd2d.png">
