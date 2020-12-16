@@ -1,28 +1,126 @@
 # IGNN
 
-:triangular_flag_on_post: **For visual comparison on the benchmarks, you can download our results from [here](https://drive.google.com/file/d/15x81tYQVpml4OvFqbA05mQQSRKL8phxz/view?usp=sharing).** Our code will also released soon...
-
-Code repo for "Cross-Scale Internal Graph Neural Network for Image Super-Resolution" &nbsp;[[arXiv]](https://arxiv.org/pdf/2006.16673.pdf)
+Code repo for "Cross-Scale Internal Graph Neural Network for Image Super-Resolution" &nbsp; [[paper]](https://proceedings.neurips.cc/paper/2020/file/23ad3e314e2a2b43b4c720507cec0723-Paper.pdf) [[supp]](https://proceedings.neurips.cc/paper/2020/file/23ad3e314e2a2b43b4c720507cec0723-Supplemental.pdf)
 
 <p align="center">
   <img width=95% src="https://user-images.githubusercontent.com/14334509/86379250-34450200-bcbd-11ea-9a85-aab4bc73cd2d.png">
 </p>
 
-**Note that** the paper is under review. Our code and models will be released once the paper is accepted.
+## Prepare datasets
+1 Download training dataset and test datasets from [here](https://drive.google.com/file/d/1fFBCXkUIgHkjqWiCeW7w-1TYHE0A2ZZF/view?usp=sharing).
 
-## Abstract
 
-Non-local self-similarity in natural images has been well studied as an effective prior in image restoration. However, for single image super-resolution (SISR), most existing deep non-local methods (e.g., non-local neural networks) only exploit similar patches within the same scale of the low-resolution (LR) input image. Consequently, the restoration is limited to using the same-scale information while neglecting potential high-resolution (HR) cues from other scales. In this paper, we explore the cross-scale patch recurrence property of a natural image, i.e., similar patches tend to recur many times across different scales. This is achieved using a novel cross-scale internal graph neural network (**IGNN**). Specifically, we dynamically construct a cross-scale graph by searching k-nearest neighboring patches in the downsampled LR image for each query patch in the LR image. We then obtain the corresponding k HR neighboring patches in the LR image and aggregate them adaptively in accordance to the edge label of the constructed graph. In this way, the HR information can be passed from k HR neighboring patches to the LR query patch to help it recover more detailed textures. Besides, these internal image-specific LR/HR exemplars are also significant complements to the external information learned from the training dataset. Extensive experiments demonstrate the effectiveness of **IGNN** against the state-of-the-art SISR methods including existing non-local networks on standard benchmarks.
+2 Crop training dataset DIV2K to sub-images.
+```
+python ./datasets/prepare_DIV2K_subimages.py
+```
+Remember to modify the 'input_folder' and 'save_folder' in the above script.
 
-## Some Visual Results (x4)
+## Dependencies and Installation
+The denoising code is tested with Python 3.7, PyTorch 1.1.0 and Cuda 9.0 but is likely to run with newer versions of PyTorch and Cuda.
+
+1 Create conda environment.
+```
+conda create --name ignn
+conda activate ignn
+conda install pytorch=1.1.0 torchvision=0.3.0 cudatoolkit=9.0 -c pytorch
+```
+2 Install PyInn.
+```
+pip install git+https://github.com/szagoruyko/pyinn.git@master
+```
+3 Install other dependencies.
+```
+python setup.py install
+pip install -r requirements.txt
+```
+
+## Pretrained Models
+Downloading the pretrained models from this [link](https://drive.google.com/drive/folders/1xS0jATn0MddZkLl2Rx9VPLh-U_rUxjt1?usp=sharing) and put them into ./ckpt
+
+## Training
+Use the following command to train the network:
+
+```
+python runner.py
+        --gpu [gpu_id]\
+        --phase 'train'\
+        --scale [2/3/4]\
+        --dataroot [dataset root]\
+        --out [output path]
+```
+Use the following command to resume training the network:
+
+```
+python runner.py 
+        --gpu [gpu_id]\
+        --phase 'resume'\
+        --weights './ckpt/best-ckpt.pth.tar'\
+        --scale [2/3/4]\
+        --dataroot [dataset root]\
+        --out [output path]
+```
+You can also use the following simple command with different settings in config.py:
+
+```
+python runner.py
+```
+
+## Testing
+Use the following command to test the network on benchmark datasets (w/ GT):
+```
+python runner.py \
+        --gpu [gpu_id]\
+        --phase 'test'\
+        --weights './ckpt/best-ckpt.pth.tar'\
+        --scale [2/3/4]\
+        --dataroot [dataset root]\
+        --testname [Set5, Set14, BSD100, Urban100, Manga109]\
+        --out [output path]
+```
+
+Use the following command to test the network on your demo images (wo/ GT):
+```
+python runner.py \
+        --gpu [gpu_id]\
+        --phase 'test'\
+        --weights './ckpt/best-ckpt.pth.tar'\
+        --scale [2/3/4]\
+        --demopath [test folder path]\
+        --out [output path]
+```
+
+You can also use the following simple command with different settings in config.py:
+
+```
+python runner.py
+```
+
+## Visual Results (x4)
+For visual comparison on the 5 benchmarks, you can download our IGNN results from [here](https://drive.google.com/file/d/15x81tYQVpml4OvFqbA05mQQSRKL8phxz/view?usp=sharing).
+
+### Some examples
 
 ![image](https://user-images.githubusercontent.com/14334509/86381317-c817cd80-bcbf-11ea-9b29-1f60ebfaa2e5.png)
 
 ![image](https://user-images.githubusercontent.com/14334509/86384957-129a4980-bcc2-11ea-9405-c81c3af6d01f.png)
 
+## Citation
 
+If you find our work useful for your research, please consider citing the following papers :)
+
+```
+@inproceedings{zhou2020cross,
+title={Cross-scale internal graph neural network for image super-resolution},
+author={Zhou, Shangchen and Zhang, Jiawei and Zuo, Wangmeng and Loy, Chen Change},
+booktitle={Advances in Neural Information Processing Systems},
+year={2020}
+}
+```
+## Contact
+
+We are glad to hear from you. If you have any questions, please feel free to contact shangchenzhou@gmail.com.
 
 ## License
 
 This project is open sourced under MIT license.
-

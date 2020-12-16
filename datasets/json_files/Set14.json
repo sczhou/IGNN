@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Set14",
+        "phase": "test",
+        "sample": [
+            "baboon",
+            "barbara",
+            "bridge",
+            "coastguard",
+            "comic",
+            "face",
+            "flowers",
+            "foreman",
+            "lenna",
+            "man",
+            "monarch",
+            "pepper",
+            "ppt3",
+            "zebra"
+        ]
+    }
+]
