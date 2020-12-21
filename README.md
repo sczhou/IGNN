@@ -82,7 +82,7 @@ python runner.py \
         --out [output path]
 ```
 
-Use the following command to test the network on your demo images (wo/ GT):
+Use the following command to test the network on your demo images (w/o GT):
 ```
 python runner.py \
         --gpu [gpu_id]\
