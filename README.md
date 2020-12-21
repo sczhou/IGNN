@@ -29,9 +29,12 @@ conda install pytorch=1.1.0 torchvision=0.3.0 cudatoolkit=9.0 -c pytorch
 ```
 pip install git+https://github.com/szagoruyko/pyinn.git@master
 ```
-3 Install other dependencies.
+3 Install matmul_cuda
 ```
 bash install.sh
+```
+4 Install other dependencies.
+```
 pip install -r requirements.txt
 ```
 
@@ -55,7 +58,7 @@ Use the following command to resume training the network:
 python runner.py 
         --gpu [gpu_id]\
         --phase 'resume'\
-        --weights './ckpt/best-ckpt.pth.tar'\
+        --weights './ckpt/IGNN_x[2/3/4].pth'\
         --scale [2/3/4]\
         --dataroot [dataset root]\
         --out [output path]
@@ -72,7 +75,7 @@ Use the following command to test the network on benchmark datasets (w/ GT):
 python runner.py \
         --gpu [gpu_id]\
         --phase 'test'\
-        --weights './ckpt/best-ckpt.pth.tar'\
+        --weights './ckpt/IGNN_x[2/3/4].pth'\
         --scale [2/3/4]\
         --dataroot [dataset root]\
         --testname [Set5, Set14, BSD100, Urban100, Manga109]\
@@ -84,7 +87,7 @@ Use the following command to test the network on your demo images (wo/ GT):
 python runner.py \
         --gpu [gpu_id]\
         --phase 'test'\
-        --weights './ckpt/best-ckpt.pth.tar'\
+        --weights './ckpt/IGNN_x[2/3/4].pth'\
         --scale [2/3/4]\
         --demopath [test folder path]\
         --out [output path]
