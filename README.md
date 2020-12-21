@@ -29,7 +29,7 @@ conda install pytorch=1.1.0 torchvision=0.3.0 cudatoolkit=9.0 -c pytorch
 ```
 pip install git+https://github.com/szagoruyko/pyinn.git@master
 ```
-3 Install matmul_cuda
+3 Install matmul_cuda.
 ```
 bash install.sh
 ```
