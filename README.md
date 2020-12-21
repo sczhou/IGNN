@@ -31,7 +31,7 @@ pip install git+https://github.com/szagoruyko/pyinn.git@master
 ```
 3 Install other dependencies.
 ```
-python setup.py install
+bash install.sh
 pip install -r requirements.txt
 ```
 
