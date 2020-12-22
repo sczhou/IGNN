@@ -42,12 +42,16 @@ def main():
         cfg.CONST.WEIGHTS = args.weights
     if args.dataset_root is not None:
         cfg.DIR.DATASET_ROOT = args.dataset_root
-    if args.testdata_name is not None:
-        cfg.DATASET.DATASET_TEST_NAME = args.testdata_name
     if args.demodata_path is not None:
         cfg.DIR.IMAGE_LR_TEST_PATH = args.demodata_path
     if args.out_path is not None:
         cfg.DIR.OUT_PATH = args.out_path
+    if args.testdata_name is not None:
+        cfg.DATASET.DATASET_TEST_NAME = args.testdata_name
+        if cfg.DATASET.DATASET_TEST_NAME in ['Set5', 'Set14', 'BSD100', 'Urban100', 'Manga109']:
+            cfg.DIR.DATASET_JSON_TEST_PATH      = './datasets/json_files/'+cfg.DATASET.DATASET_TEST_NAME+'.json'
+            cfg.DIR.IMAGE_LR_TEST_PATH          = cfg.DIR.DATASET_ROOT + cfg.DATASET.DATASET_TEST_NAME + '/LR/'+cfg.DIR.DATASET_SCALE+'/{1}.png'
+            cfg.DIR.IMAGE_HR_TEST_PATH          = cfg.DIR.DATASET_ROOT + cfg.DATASET.DATASET_TEST_NAME + '/HR/'+cfg.DIR.DATASET_SCALE+'/{1}.png'
 
     cfg.CONST.NUM_GPU = torch.cuda.device_count()
 
