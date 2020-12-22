@@ -90,6 +90,7 @@ python runner.py \
         --weights './ckpt/IGNN_x[2/3/4].pth'\
         --scale [2/3/4]\
         --demopath [test folder path]\
+        --testname 'Demo'\
         --out [output path]
 ```
 
