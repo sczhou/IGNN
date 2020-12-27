@@ -25,6 +25,10 @@ class SRDataset(torch.utils.data.dataset.Dataset):
     def __init__(self, file_list, transforms = None):
         self.file_list  = file_list
         self.transforms = transforms
+        if cfg.CONST.SCALE == 4:
+            self.down_scale = 2
+        else:
+            self.down_scale = cfg.CONST.SCALE
 
     def __len__(self):
         return len(self.file_list)
@@ -32,10 +36,10 @@ class SRDataset(torch.utils.data.dataset.Dataset):
     def __getitem__(self, idx):
         img_name, img_lr, img_hr = self.image_read(idx)
         img_lr, img_hr = self.transforms(img_lr, img_hr)
-        if cfg.CONST.SCALE == 4:
-            img_lr_s = imresize(img_lr/255.0, 1.0/2)*255
-        else:
-            img_lr_s = imresize(img_lr/255.0, 1.0/cfg.CONST.SCALE)*255
+        _,h,w = img_lr.size()
+        img_lr_ = img_lr[:,:int(h-h%self.down_scale), :int(w-w%self.down_scale)] 
+        img_lr_s = imresize(img_lr_/255.0, 1.0/self.down_scale)*255
+
         img_lr_s = img_lr_s.clamp(0,255)
         return img_name, img_lr_s, img_lr, img_hr
 
@@ -100,6 +104,10 @@ class TestDataset(torch.utils.data.dataset.Dataset):
     def __init__(self, file_list, transforms = None):
         self.file_list  = file_list
         # self.transforms = transforms
+        if cfg.CONST.SCALE == 4:
+            self.down_scale = 2
+        else:
+            self.down_scale = cfg.CONST.SCALE
 
     def __len__(self):
         return len(self.file_list)
@@ -108,10 +116,10 @@ class TestDataset(torch.utils.data.dataset.Dataset):
         img_name, img_lr = self.image_read(idx)
         img_lr = img_lr[:,:,[2,1,0]]
         img_lr = img2tensor(img_lr)
-        if cfg.CONST.SCALE == 4:
-            img_lr_s = imresize(img_lr/255.0, 1.0/2)*255
-        else:
-            img_lr_s = imresize(img_lr/255.0, 1.0/cfg.CONST.SCALE)*255
+        _,h,w = img_lr.size()
+        img_lr_ = img_lr[:,:int(h-h%self.down_scale), :int(w-w%self.down_scale)] 
+        img_lr_s = imresize(img_lr_/255.0, 1.0/self.down_scale)*255
+
         img_lr_s = img_lr_s.clamp(0,255)
         return img_name, img_lr_s, img_lr
 

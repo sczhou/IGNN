@@ -218,7 +218,6 @@ class GCNBlock(nn.Module):
 
         # graph_aggregate
         yd = self.pixelshuffle_down(y)
-        # yd = net_utils.crop_like(yd,x).contiguous()
 
         # b k*c h*s w*s
         knn_hr = self.graph_aggregate(y, yd, idx_k)
