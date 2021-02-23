@@ -32,8 +32,8 @@ def initialize_weights(net_l, scale=1):
     if not isinstance(net_l, list):
         net_l = [net_l]
     for net in net_l:
-        for m in net.modules():
-            if isinstance(m, nn.Conv2d):
+        for n, m in net.named_modules():
+            if isinstance(m, nn.Conv2d) and not '_mean' in n:
                 init.kaiming_normal_(m.weight, a=0, mode='fan_in')
                 m.weight.data *= scale  # for residual block
                 if m.bias is not None:
